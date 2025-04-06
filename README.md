@@ -38,7 +38,6 @@ erDiagram
         string nome
         text descricao
         date data
-        UUID local_id FK
     }
 
     ACONTECIMENTO ||--o{ ACONTECIMENTO_PESSOA : "envolve"
@@ -47,6 +46,22 @@ erDiagram
         UUID id PK
         UUID acontecimento_id FK
         UUID pessoa_id FK
+    }
+
+    ACONTECIMENTO ||--o{ ACONTECIMENTO_ITEM : "envolve"
+    ITEM ||--o{ ACONTECIMENTO_ITEM : "envolvido em"
+    ACONTECIMENTO_ITEM {
+        UUID id PK
+        UUID acontecimento_id FK
+        UUID item_id FK
+    }
+
+    ACONTECIMENTO ||--o{ ACONTECIMENTO_LOCAL : "ocorre em"
+    LOCAL ||--o{ ACONTECIMENTO_LOCAL : "aconteceu em"
+    ACONTECIMENTO_LOCAL {
+        UUID id PK
+        UUID acontecimento_id FK
+        UUID local_id FK
     }
 
     RELACIONAMENTO {
