@@ -27,14 +27,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User updateUser(User user) {
+    public void updateUser(User user) {
         User existingUser = getUserOrThrow(user.getId());
 
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
         existingUser.setPassword(user.getPassword());
 
-        return userRepository.save(existingUser);
+        userRepository.save(existingUser);
     }
 
     @Override
