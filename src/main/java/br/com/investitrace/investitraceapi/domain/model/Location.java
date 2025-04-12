@@ -8,13 +8,8 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "fk_location_user",
-                    foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
-            ))
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(nullable = false)
     private String name;
@@ -22,7 +17,7 @@ public class Location {
     @Lob
     private String description;
 
-    private String image;
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -32,12 +27,12 @@ public class Location {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -56,12 +51,12 @@ public class Location {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String image) {
+        this.imageUrl = image;
     }
 }
 

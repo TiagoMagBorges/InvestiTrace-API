@@ -10,13 +10,8 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "fk_event_user",
-                    foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
-            ))
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(nullable = false)
     private String name;
@@ -38,12 +33,12 @@ public class Event {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

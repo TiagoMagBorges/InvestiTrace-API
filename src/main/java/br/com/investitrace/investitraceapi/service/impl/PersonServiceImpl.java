@@ -2,9 +2,10 @@ package br.com.investitrace.investitraceapi.service.impl;
 
 import br.com.investitrace.investitraceapi.domain.model.Person;
 import br.com.investitrace.investitraceapi.domain.repository.PersonRepository;
+import br.com.investitrace.investitraceapi.domain.repository.UserRepository;
 import br.com.investitrace.investitraceapi.service.PersonService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +15,18 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
 
-    public PersonServiceImpl(PersonRepository personRepository) {
+    private final UserRepository userRepository;
+
+    public PersonServiceImpl(PersonRepository personRepository, UserRepository userRepository) {
         this.personRepository = personRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
     public Person createPerson(Person person) {
         validatePersonDoesNotExist(person);
+        validateUserExists(person.getUserId());
         return personRepository.save(person);
     }
 
@@ -29,6 +34,10 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public void updatePerson(Person person) {
         Person existingPerson = getPersonOrThrow(person.getId());
+
+        if (!existingPerson.getUserId().equals(person.getUserId())) {
+            throw new IllegalArgumentException("UserId mismatch. Cannot update person with a different user.");
+        }
 
         existingPerson.setName(person.getName());
         existingPerson.setDescription(person.getDescription());
@@ -39,9 +48,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deletePerson(Long personId) {
+    public void deletePerson(Long personId, Long userId) {
         if(!personRepository.existsById(personId)) {
             throw new EntityNotFoundException("Person not found with id: " + personId);
+        }
+        if(!userRepository.existsById(personId)) {
+            throw new EntityNotFoundException("User not found with id: " + personId);
         }
         personRepository.deleteById(personId);
     }
@@ -65,5 +77,11 @@ public class PersonServiceImpl implements PersonService {
     private Person getPersonOrThrow(Long id) {
         return personRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Person not found with id: " + id));
+    }
+
+    private void validateUserExists(Long userId) {
+        if (userId == null || !userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("User not found with id: " + userId);
+        }
     }
 }
