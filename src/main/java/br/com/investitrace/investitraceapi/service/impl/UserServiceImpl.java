@@ -40,9 +40,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUser(Long userId) {
-        if (!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId))
             throw new EntityNotFoundException("User not found with id: " + userId);
-        }
+
         userRepository.deleteById(userId);
     }
 
@@ -57,13 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateUserDoesNotExist(User user) {
-        if (user.getId() != null && userRepository.existsById(user.getId())) {
+        if (user.getId() != null && userRepository.existsById(user.getId()))
             throw new IllegalArgumentException("User already exists with id: " + user.getId());
-        }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail()))
             throw new IllegalArgumentException("User already exists with email: " + user.getEmail());
-        }
     }
 
     private User getUserOrThrow(Long id) {
