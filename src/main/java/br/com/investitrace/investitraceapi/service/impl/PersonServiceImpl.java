@@ -35,9 +35,8 @@ public class PersonServiceImpl implements PersonService {
     public void updatePerson(Person person) {
         Person existingPerson = getPersonOrThrow(person.getId());
 
-        if (!existingPerson.getUserId().equals(person.getUserId())) {
+        if (!existingPerson.getUserId().equals(person.getUserId()))
             throw new IllegalArgumentException("UserId mismatch. Cannot update person with a different user.");
-        }
 
         existingPerson.setName(person.getName());
         existingPerson.setDescription(person.getDescription());
@@ -49,12 +48,12 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void deletePerson(Long personId, Long userId) {
-        if(!personRepository.existsById(personId)) {
+        if(!personRepository.existsById(personId))
             throw new EntityNotFoundException("Person not found with id: " + personId);
-        }
-        if(!userRepository.existsById(personId)) {
+
+        if(!userRepository.existsById(personId))
             throw new EntityNotFoundException("User not found with id: " + personId);
-        }
+
         personRepository.deleteById(personId);
     }
 
@@ -69,9 +68,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void validatePersonDoesNotExist(Person person) {
-        if (person.getId() != null && personRepository.existsById(person.getId())) {
+        if (person.getId() != null && personRepository.existsById(person.getId()))
             throw new IllegalArgumentException("Person already exists with id: " + person.getId());
-        }
     }
 
     private Person getPersonOrThrow(Long id) {
@@ -80,8 +78,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void validateUserExists(Long userId) {
-        if (userId == null || !userRepository.existsById(userId)) {
+        if (userId == null || !userRepository.existsById(userId))
             throw new EntityNotFoundException("User not found with id: " + userId);
-        }
     }
 }

@@ -35,9 +35,8 @@ public class LocationServiceImpl implements LocationService {
     public void updateLocation(Location location) {
         Location existingLocation = getLocationOrThrow(location.getId());
 
-        if (!existingLocation.getUserId().equals(location.getUserId())) {
+        if (!existingLocation.getUserId().equals(location.getUserId()))
             throw new IllegalArgumentException("UserId mismatch. Cannot update location with a different user.");
-        }
 
         existingLocation.setName(location.getName());
         existingLocation.setDescription(location.getDescription());
@@ -49,12 +48,12 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional
     public void deleteLocation(Long locationId, Long userId) {
-        if(!locationRepository.existsById(locationId)) {
+        if(!locationRepository.existsById(locationId))
             throw new EntityNotFoundException("Location not found with id: " + locationId);
-        }
-        if(!userRepository.existsById(userId)) {
+
+        if(!userRepository.existsById(userId))
             throw new EntityNotFoundException("User not found with id: " + userId);
-        }
+
         locationRepository.deleteById(locationId);
     }
 
@@ -70,15 +69,13 @@ public class LocationServiceImpl implements LocationService {
     }
 
     private void validateLocationDoesNotExist(Location location) {
-        if (locationRepository.existsById(location.getId())) {
+        if (locationRepository.existsById(location.getId()))
             throw new IllegalArgumentException("Location already exists with id: " + location.getId());
-        }
     }
 
     private void validateUserExists(Long userId) {
-        if (!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId))
             throw new IllegalArgumentException("User does not exist with id: " + userId);
-        }
     }
 
     private Location getLocationOrThrow(Long locationId) {
