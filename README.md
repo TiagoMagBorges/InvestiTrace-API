@@ -41,49 +41,25 @@ erDiagram
     }
 
     ACONTECIMENTO ||--o{ ACONTECIMENTO_PESSOA : "envolve"
-    PESSOA ||--o{ ACONTECIMENTO_PESSOA : "envolvido em"
+    ACONTECIMENTO ||--o{ ACONTECIMENTO_LOCAL : "ocorre em"
+    ACONTECIMENTO ||--o{ ACONTECIMENTO_ITEM : "utiliza"
+
     ACONTECIMENTO_PESSOA {
         UUID id PK
         UUID acontecimento_id FK
         UUID pessoa_id FK
     }
 
-    ACONTECIMENTO ||--o{ ACONTECIMENTO_ITEM : "envolve"
-    ITEM ||--o{ ACONTECIMENTO_ITEM : "envolvido em"
-    ACONTECIMENTO_ITEM {
-        UUID id PK
-        UUID acontecimento_id FK
-        UUID item_id FK
-    }
-
-    ACONTECIMENTO ||--o{ ACONTECIMENTO_LOCAL : "ocorre em"
-    LOCAL ||--o{ ACONTECIMENTO_LOCAL : "aconteceu em"
     ACONTECIMENTO_LOCAL {
         UUID id PK
         UUID acontecimento_id FK
         UUID local_id FK
     }
 
-    RELACIONAMENTO {
+    ACONTECIMENTO_ITEM {
         UUID id PK
-        UUID usuario_id FK
-        string tipo_entidade_origem
-        UUID id_entidade_origem
-        string tipo_entidade_destino
-        UUID id_entidade_destino
-        string nome_relacao
-    }
-
-    RELACIONAMENTO }o--|| PESSOA : "origem/destino"
-    RELACIONAMENTO }o--|| LOCAL : "origem/destino"
-    RELACIONAMENTO }o--|| ITEM : "origem/destino"
-    RELACIONAMENTO }o--|| ACONTECIMENTO : "origem/destino"
-
-    USUARIO {
-        UUID id PK
-        string nome
-        string email
-        string senha_hash
+        UUID acontecimento_id FK
+        UUID item_id FK
     }
 
 ```
