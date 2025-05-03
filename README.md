@@ -4,62 +4,59 @@
 
 ```mermaid
 erDiagram
-    USUARIO ||--o{ PESSOA : "cria"
-    USUARIO ||--o{ LOCAL : "cria"
-    USUARIO ||--o{ ITEM : "cria"
-    USUARIO ||--o{ ACONTECIMENTO : "cria"
-
-    PESSOA {
-        UUID id PK
-        UUID usuario_id FK
-        string nome
-        text descricao
-        string imagem
-    }
-
-    LOCAL {
-        UUID id PK
-        UUID usuario_id FK
-        string nome
-        text descricao
-        string imagem
-    }
+    USER ||--o{ ITEM : "cria"
+    USER ||--o{ LOCATION : "cria"
+    USER ||--o{ PERSON : "cria"
+    USER ||--o{ EVENT : "cria"
+    USER ||--o{ RELATION : "cria"
 
     ITEM {
-        UUID id PK
-        UUID usuario_id FK
-        string nome
-        text descricao
+        Long id PK
+        Long userId FK
+        String name
+        String description
+        String imageUrl
     }
 
-    ACONTECIMENTO {
-        UUID id PK
-        UUID usuario_id FK
-        string nome
-        text descricao
-        date data
+    LOCATION {
+        Long id PK
+        Long userId FK
+        String name
+        String description
+        String imageUrl
     }
 
-    ACONTECIMENTO ||--o{ ACONTECIMENTO_PESSOA : "envolve"
-    ACONTECIMENTO ||--o{ ACONTECIMENTO_LOCAL : "ocorre em"
-    ACONTECIMENTO ||--o{ ACONTECIMENTO_ITEM : "utiliza"
-
-    ACONTECIMENTO_PESSOA {
-        UUID id PK
-        UUID acontecimento_id FK
-        UUID pessoa_id FK
+    PERSON {
+        Long id PK
+        Long userId FK
+        String name
+        String description
+        String imageUrl
     }
 
-    ACONTECIMENTO_LOCAL {
-        UUID id PK
-        UUID acontecimento_id FK
-        UUID local_id FK
+    EVENT {
+        Long id PK
+        Long userId FK
+        String name
+        String description
+        String imageUrl
+        Date date
     }
 
-    ACONTECIMENTO_ITEM {
-        UUID id PK
-        UUID acontecimento_id FK
-        UUID item_id FK
+    RELATION {
+        Long id PK
+        Long userId FK
+        String name
+        String originType
+        Long originId
+        String targetType
+        Long targetId
+        String description
     }
+
+    PERSON ||--o{ RELATION : "é relacionada com"
+    LOCATION ||--o{ RELATION : "é relacionada com"
+    ITEM ||--o{ RELATION : "é relacionada com"
+    EVENT ||--o{ RELATION : "é relacionada com"
 
 ```
