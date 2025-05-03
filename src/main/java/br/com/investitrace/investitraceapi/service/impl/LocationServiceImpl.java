@@ -64,6 +64,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }

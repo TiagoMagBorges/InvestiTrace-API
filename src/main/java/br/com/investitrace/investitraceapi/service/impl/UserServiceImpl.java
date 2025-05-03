@@ -47,11 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User getUserById(Long userId) {
         return getUserOrThrow(userId);
     }
 
     @Override
+    @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

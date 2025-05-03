@@ -58,11 +58,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public Person getPersonById(Long personId) {
         return getPersonOrThrow(personId);
     }
 
     @Override
+    @Transactional
     public List<Person> getAllPeople() {
         return personRepository.findAll();
     }
