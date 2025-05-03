@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class Relation {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +24,7 @@ public class Relation {
     private Long targetId;
 
     @Column(nullable = false)
-    private String relationName;
+    private String name;
 
     public Long getId() {
         return id;
@@ -75,11 +74,11 @@ public class Relation {
         this.targetId = targetId;
     }
 
-    public String getRelationName() {
-        return relationName;
+    public String getName() {
+        return name;
     }
 
-    public void setRelationName(String relationName) {
-        this.relationName = relationName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
