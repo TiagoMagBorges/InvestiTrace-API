@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 
 @Entity
 public class Relation {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    private String name;
 
     @Column(nullable = false)
     private String originType;
@@ -24,8 +25,7 @@ public class Relation {
     @Column(nullable = false)
     private Long targetId;
 
-    @Column(nullable = false)
-    private String relationName;
+    private String description;
 
     public Long getId() {
         return id;
@@ -75,11 +75,19 @@ public class Relation {
         this.targetId = targetId;
     }
 
-    public String getRelationName() {
-        return relationName;
+    public String getName() {
+        return name;
     }
 
-    public void setRelationName(String relationName) {
-        this.relationName = relationName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
